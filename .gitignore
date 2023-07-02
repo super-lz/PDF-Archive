@@ -4,3 +4,4 @@ soft/
 build/
 origin/*
 source/*
+data.json
