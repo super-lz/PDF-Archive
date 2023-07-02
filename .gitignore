@@ -2,6 +2,6 @@
 **/__pycache__/
 soft/
 build/
-origin/*
-source/*
+origin/
+source/
 data.json
