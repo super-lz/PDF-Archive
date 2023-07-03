@@ -5,17 +5,11 @@ import sys
 import subprocess
 
 from src.common.util import input_path, pdf_suffix
-from src.lib.search import search as search_res
-from src.lib.data_process import process_data
+from src.lib.search import search
 
 
 result_list = None
 keyword = ""
-
-
-def search(keywords):
-    process_data()
-    return search_res(keywords)
 
 
 def render_results(results):
@@ -43,12 +37,23 @@ def open_file(event):
         raise Exception("Unsupported platform")
 
 
-def create_ui():
+def create_ui(on_loading):
     def on_search():
         global keyword
         keyword = entry.get()
+        entry.config(state=tk.DISABLED)  # 禁用输入框
+        search_button.config(state=tk.DISABLED)  # 禁用搜索按钮
+        result_list.delete(*result_list.get_children())  # 清空结果列表
+        label_loading.pack()  # 显示加载提示信息
+        root.update()  # 更新界面，以显示加载提示
+
+        # 模拟搜索过程
         results = search(keyword)
         render_results(results)
+
+        label_loading.pack_forget()  # 隐藏加载提示信息
+        entry.config(state=tk.NORMAL)  # 启用输入框
+        search_button.config(state=tk.NORMAL)  # 启用搜索按钮
 
     def on_entry_click(event):
         if entry.get() == "请输入关键词句（最多显示15条结果）":
@@ -65,6 +70,14 @@ def create_ui():
 
     # 设置初始大小为800宽400高
     root.geometry("800x400")
+
+    # 显示加载状态
+    label = tk.Label(root, text="数据加载需要较长时间，请稍候...")
+    label.pack()
+    root.update()
+    on_loading()
+    label.pack_forget()
+    root.update()
 
     # 输入框和搜索按钮放在同一行
     input_frame = tk.Frame(root)
@@ -102,5 +115,8 @@ def create_ui():
 
     result_list.configure(yscrollcommand=scrollbar.set)
     scrollbar.configure(command=result_list.yview)
+
+    label_loading = tk.Label(root, text="正在搜索，请稍后...")
+    label_loading.pack_forget()  # 默认隐藏加载提示信息
 
     root.mainloop()

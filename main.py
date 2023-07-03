@@ -3,9 +3,10 @@ from src.lib.ui import create_ui
 from src.lib.folder_init import init_folder
 
 
-if __name__ =="__main__":
-    init_folder()
+if __name__ == "__main__":
 
-    process_data()
+    def on_loading():
+        init_folder()
+        process_data()
 
-    create_ui()
+    create_ui(on_loading)
