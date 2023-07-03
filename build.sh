@@ -40,5 +40,7 @@ cd ..
 # 复制 origin 文件夹下的所有文件到 soft/origin
 cp -r ./origin/* ./soft/origin/
 
+cp -r .config ./soft/.config
+
 # 打包完成后输出提示信息
 echo "打包完成！可执行文件位于 $distpath 目录中。"
