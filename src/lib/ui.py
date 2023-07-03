@@ -56,6 +56,7 @@ def create_ui(on_loading):
 
             # 保存文件夹路径到元数据文件中
             config_processor.save_config('origin_dir', folder_path)
+            label_path.config(text=AppConfig.get_input_path())
 
             print('文件夹路径已保存到 {} 文件中。'.format(AppConfig.config_path))
 
@@ -176,8 +177,7 @@ def create_ui(on_loading):
     select_button.pack(side=tk.LEFT)
 
     # 创建标签，设置文本、背景和前景颜色
-    label_text = AppConfig.get_input_path()
-    label = tk.Label(frame, text=label_text, wraplength=root.winfo_width() - 20, anchor='w')
-    label.pack(fill=tk.BOTH, padx=10, pady=10, expand=True)
+    label_path = tk.Label(frame, text=AppConfig.get_input_path(), wraplength=root.winfo_width() - 20, anchor='w')
+    label_path.pack(fill=tk.BOTH, padx=10, pady=10, expand=True)
 
     root.mainloop()
