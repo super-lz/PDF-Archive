@@ -1,7 +1,9 @@
 # autofind
 Automatically find scholarly article.
+
 把pdf文件全部放入origin文件夹中，程序将自动转pdf为txt格式，然后通过输入的关键词句查找对应的pdf文件
-用到了tesseract识别引擎
+
+该程序用到了tesseract识别引擎
 
 
 # notice
