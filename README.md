@@ -10,7 +10,7 @@ Automatically find scholarly article.
 chmod +x restore.sh
 chmod +x build.sh
 
-restore.sh用于测试时快捷删除处理得到的source和data.json
+restore.sh用于测试时快捷删除处理得到的source和data.json，每次commit要把测试的.config清空
 build.sh用于构建程序
 
 
