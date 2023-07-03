@@ -8,7 +8,8 @@ from src.common.util import AppConfig
 
 if __name__ == "__main__":
     if not os.path.exists(AppConfig.config_path):
-        os.makedirs(AppConfig.config_path)
+        with open(AppConfig.config_path, "w") as f:
+                    f.write('')
 
     def on_loading():
         init_folder()
