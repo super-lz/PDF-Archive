@@ -167,8 +167,16 @@ def create_ui(on_loading):
     label_loading = tk.Label(root, text="正在加载，请稍后...")
     label_loading.pack_forget()  # 默认隐藏加载提示信息
 
-    select_button = tk.Button(
-        root, text="重置文件入口", font=("Arial", 14), command=on_select)
-    select_button.pack(side=tk.LEFT, padx=10, pady=10)
+
+    select_frame = tk.Frame(root)
+    select_frame.pack(pady=10, padx=10, side=tk.LEFT)
+
+    select_button = tk.Button(select_frame, text="重置文件入口", font=("Arial", 14), command=on_select)
+    select_button.pack(anchor='w')
+
+    # 创建标签，设置文本、背景和前景颜色
+    label = tk.Label(select_frame, text=AppConfig.get_input_path(), wraplength=root.winfo_width() - 20, state=tk.NORMAL, anchor='w')
+    label.pack(fill=tk.BOTH, padx=10, pady=(0, 10), expand=True)
+
 
     root.mainloop()
