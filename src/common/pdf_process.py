@@ -9,6 +9,7 @@ if AppConfig.use_ocr:
     import pytesseract
     from PIL import Image
 
+
 class PdfProcess:
     def __init__(self, output_folder):
         self.output_folder = output_folder
@@ -29,10 +30,12 @@ class PdfProcess:
             if AppConfig.use_ocr and not text.strip():
                 images = convert_from_path(pdf_path)
                 for i, image in enumerate(images):
-                    image_path = os.path.join(self.output_folder, f"page_{i+1}.png")
+                    image_path = os.path.join(
+                        self.output_folder, f"page_{i+1}.png")
                     image.save(image_path, 'PNG')
 
-                    image_text = pytesseract.image_to_string(Image.open(image_path), lang='chi_sim')
+                    image_text = pytesseract.image_to_string(
+                        Image.open(image_path), lang='chi_sim')
                     text += image_text.strip()
 
                     os.remove(image_path)  # 删除生成的图片
