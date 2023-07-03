@@ -21,3 +21,6 @@ build.sh用于构建程序
 3. pip install -r requirements.txt
 4. 设置pyinstaller的环境变量
 5. python main.py
+
+## pip env
+可以使用虚拟环境安装python库，避免污染
