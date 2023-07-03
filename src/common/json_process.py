@@ -35,7 +35,7 @@ class JsonProcess:
                 break
 
     def add_object(self, file_name, file_path):
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding="utf-8") as file:
             content = file.read()
         new_object = {'name': file_name, 'content': content}
         self.data.append(new_object)
