@@ -13,6 +13,9 @@ class AppConfig:
     if getattr(sys, 'frozen', False):
         main_path = os.path.abspath(os.path.dirname(sys.executable))
     config_path = os.path.abspath(os.path.join(main_path, '.config'))
+    if not os.path.exists(config_path):
+        with open(config_path, "w") as f:
+                    f.write('')
     _config_processor = ConfigProcess(config_path)
     default_input_path = os.path.abspath(os.path.join(main_path, 'origin'))
     output_path = os.path.abspath(os.path.join(main_path, 'source'))
