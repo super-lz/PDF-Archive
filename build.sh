@@ -10,8 +10,8 @@ rm -rf soft
 # 指定打包路径为当前文件夹的 dist 目录
 distpath="./soft"
 
-# 执行 PyInstaller 打包命令
-pyinstaller -w --distpath "$distpath" main.py
+# 执行 PyInstaller 打包命令，单文件打包
+pyinstaller -F -w -i icon.ico --distpath "$distpath" main.py
 
 # 进入 soft 文件夹
 cd $distpath
