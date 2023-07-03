@@ -31,6 +31,7 @@ class JsonProcess:
     def delete_object(self, name):
         for item in self.data:
             if item['name'] == name:
+                print('delete:' + name)
                 self.data.remove(item)
                 break
 
@@ -38,6 +39,7 @@ class JsonProcess:
         with open(file_path, 'r', encoding="utf-8") as file:
             content = file.read()
         new_object = {'name': file_name, 'content': content}
+        print('add:' + file_name)
         self.data.append(new_object)
 
     def save_data(self):

@@ -1,11 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 import os
 import sys
 import subprocess
 
-from src.common.util import input_path, pdf_suffix
+from src.common.util import AppConfig
+from src.common.config_process import ConfigProcess
+from src.lib.data_process import process_data
 from src.lib.search import search
+from src.lib.folder_init import init_folder, clear_folder
 
 
 result_list = None
@@ -20,7 +24,8 @@ def render_results(results):
     for i, result in enumerate(results, start=1):
         name = result['name']
         sentence = result['sentence']
-        path = os.path.join(input_path, result['name'] + pdf_suffix)
+        path = os.path.join(AppConfig.get_input_path(),
+                            result['name'] + AppConfig.pdf_suffix)
         item_text = f"{i}. {name}"
         result_list.insert('', 'end', values=(item_text, sentence, path))
 
@@ -38,6 +43,49 @@ def open_file(event):
 
 
 def create_ui(on_loading):
+    def on_select():
+        root = tk.Tk()
+        root.withdraw()
+
+        # 选择文件夹
+        folder_path = filedialog.askdirectory()
+
+        if folder_path:
+            # 创建 ConfigProcess 实例，传入元数据文件的路径
+            config_processor = ConfigProcess(AppConfig.config_path)
+
+            # 保存文件夹路径到元数据文件中
+            config_processor.save_config('origin_dir', folder_path)
+
+            print('文件夹路径已保存到 {} 文件中。'.format(AppConfig.config_path))
+
+            entry.config(state=tk.DISABLED)  # 禁用输入框
+            search_button.config(state=tk.DISABLED)  # 禁用搜索按钮
+            select_button.config(state=tk.DISABLED)  # 禁用选择文件按钮
+            result_list.delete(*result_list.get_children())  # 清空结果列表
+            label_loading.pack()  # 显示加载提示信息
+            root.update()  # 更新界面，以显示加载提示
+
+            # 清除之前处理得到的数据
+            clear_folder()
+
+            # 新建数据文件夹
+            init_folder()
+
+            # 重新处理数据
+            process_data()
+
+            # 搜索过程
+            results = search(keyword)
+            render_results(results)
+
+            label_loading.pack_forget()  # 隐藏加载提示信息
+            entry.config(state=tk.NORMAL)  # 启用输入框
+            search_button.config(state=tk.NORMAL)  # 启用搜索按钮
+            select_button.config(state=tk.NORMAL)  # 启用文件选择按钮
+        else:
+            print('未选择文件夹，路径未保存。')
+
     def on_search():
         global keyword
         keyword = entry.get()
@@ -47,7 +95,7 @@ def create_ui(on_loading):
         label_loading.pack()  # 显示加载提示信息
         root.update()  # 更新界面，以显示加载提示
 
-        # 模拟搜索过程
+        # 搜索过程
         results = search(keyword)
         render_results(results)
 
@@ -116,7 +164,11 @@ def create_ui(on_loading):
     result_list.configure(yscrollcommand=scrollbar.set)
     scrollbar.configure(command=result_list.yview)
 
-    label_loading = tk.Label(root, text="正在搜索，请稍后...")
+    label_loading = tk.Label(root, text="正在加载，请稍后...")
     label_loading.pack_forget()  # 默认隐藏加载提示信息
+
+    select_button = tk.Button(
+        root, text="重置文件入口", font=("Arial", 14), command=on_select)
+    select_button.pack(side=tk.LEFT, padx=10, pady=10)
 
     root.mainloop()
