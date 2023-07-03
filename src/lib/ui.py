@@ -30,7 +30,7 @@ def open_file(event):
     path = result_list.item(item)['values'][2]
 
     if sys.platform.startswith('win'):
-        subprocess.Popen(["start", path], shell=True)
+        os.startfile(path)
     elif sys.platform.startswith('darwin'):
         subprocess.Popen(["open", path])
     else:
