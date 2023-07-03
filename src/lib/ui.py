@@ -177,6 +177,6 @@ def create_ui(on_loading):
     # 创建标签，设置文本、背景和前景颜色
     label = tk.Label(select_frame, text=AppConfig.get_input_path(), wraplength=root.winfo_width() - 20, state=tk.NORMAL, anchor='w')
     label.pack(fill=tk.BOTH, padx=10, pady=(0, 10), expand=True)
-    label['height'] = 2
+    label['height'] = 10
 
     root.mainloop()
