@@ -4,3 +4,5 @@
 
 rm -rf source
 rm data.json
+rm .config
+touch .config
