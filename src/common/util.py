@@ -4,6 +4,7 @@ from src.common.config_process import ConfigProcess
 
 class AppConfig:
     origin_dir_key = 'origin_dir'
+    use_ocr_key = 'user_ocr'
     pdf_suffix = '.pdf'
     txt_suffix = '.txt'
 
@@ -12,6 +13,7 @@ class AppConfig:
     _default_input_path = None
     output_path = None
     data_path = None
+    use_ocr = False
 
     @classmethod
     def initialize(cls):
@@ -25,6 +27,9 @@ class AppConfig:
         cls._default_input_path = os.path.abspath(os.path.join(cls.main_path, 'origin'))
         cls.output_path = os.path.abspath(os.path.join(cls.main_path, 'source'))
         cls.data_path = os.path.abspath(os.path.join(cls.main_path, 'data.json'))
+        config_processor = ConfigProcess(cls.config_path)
+        if config_processor.has_key(cls.use_ocr_key):
+            cls.use_ocr = True if config_processor.read_config(cls.use_ocr_key) == 'True' else False
 
     @classmethod
     def get_input_path(cls):

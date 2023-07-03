@@ -18,7 +18,7 @@ def process_data():
     # 转换还未转换的文件
     for file_name in origin_folder.file_names:
         if file_name not in source_folder.file_names:
-            print(f'add: {file_name}')
+            print(f'add:{file_name}')
             file_path = os.path.join(AppConfig.get_input_path(), file_name + AppConfig.pdf_suffix)
             pdf_process.convert_to_txt(file_path)
             source_folder.file_names.append(file_name)
@@ -26,7 +26,7 @@ def process_data():
     # 去除多余的文件
     for file_name in source_folder.file_names:
         if file_name not in origin_folder.file_names:
-            print(f'remove: {file_name}')
+            print(f'remove:{file_name}')
             file_path = os.path.join(AppConfig.output_path, file_name + AppConfig.txt_suffix)
             os.remove(file_path)
             source_folder.file_names.remove(file_name)

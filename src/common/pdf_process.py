@@ -1,9 +1,13 @@
 import os
 import pdfplumber
-from pdf2image import convert_from_path
-import pytesseract
-from PIL import Image
 import unicodedata
+
+from src.common.util import AppConfig
+
+if AppConfig.use_ocr:
+    from pdf2image import convert_from_path
+    import pytesseract
+    from PIL import Image
 
 class PdfProcess:
     def __init__(self, output_folder):
@@ -22,7 +26,7 @@ class PdfProcess:
                     text += page.extract_text()
 
             # 如果提取的文本为空，则使用pdf2image和pytesseract进行OCR识别
-            if not text.strip():
+            if AppConfig.use_ocr and not text.strip():
                 images = convert_from_path(pdf_path)
                 for i, image in enumerate(images):
                     image_path = os.path.join(self.output_folder, f"page_{i+1}.png")
