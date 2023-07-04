@@ -29,3 +29,5 @@ build.sh用于构建程序
 
 ## pip env
 可以使用虚拟环境安装python库，避免污染
+
+可以pip install pipreqs，使用pipreqs导出python库，pipreqs ./ --encoding=utf-8 --force
